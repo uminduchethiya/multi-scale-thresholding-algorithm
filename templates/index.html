@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Thresholding</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        img:first-child {
+            margin-top: 0;
+        }
+
+        img[alt="Uploaded Image"] {
+            margin-top: 20px;
+        }
+
+        p[style="color: red;"] {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multi Thresholding</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        <label for="file">Choose an image file:</label>
+        <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif">
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if result_paths %}
+        {% for result_path in result_paths %}
+            <p>Result {{ loop.index }}:</p>
+            <img src="data:image/png;base64,{{ result_path }}" alt="Result {{ loop.index }}">
+        {% endfor %}
+        {% if encoded_image %}
+            <img src="data:image/png;base64,{{ encoded_image }}" alt="Uploaded Image">
+        {% endif %}
+    {% endif %}
+</body>
+</html>
